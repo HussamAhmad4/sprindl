@@ -3,10 +3,12 @@ import MessageBubble from './MessageBubble.jsx'
 import TypingIndicator from './TypingIndicator.jsx'
 
 const STARTER_PROMPTS = [
-  "I lost my job and I'm worried about paying rent.",
-  'I need help affording groceries for my family.',
-  "I'm a senior and need help paying my electric bill.",
-  'I just had a baby and need help with health coverage.',
+  "I can't afford food this week.",
+  "I need help paying for college or managing my loans.",
+  "I just turned 26 and lost my health insurance.",
+  "I'm stressed and need mental health support.",
+  "What student discounts am I missing out on?",
+  "I lost my job — what can I do?",
 ]
 
 export default function ChatWindow({ messages, isLoading, error, onSend }) {
