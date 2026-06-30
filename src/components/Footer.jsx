@@ -1,10 +1,14 @@
-export default function Footer() {
+export default function Footer({ minimal }) {
+  if (minimal) return (
+    <footer className="app-footer app-footer--minimal">
+      <p>General information only — not professional advice. Verify details with official sources.</p>
+    </footer>
+  )
   return (
     <footer className="app-footer">
       <p>
-        Navi shares general information, not professional or legal advice. Always confirm details with the
-        official program. In an emergency, call <strong>211</strong> for local help or <strong>988</strong> for
-        the Suicide &amp; Crisis Lifeline.
+        Navi provides general information, not professional advice. Always verify with official sources.
+        Crisis support: <strong>988</strong> · Text HOME to <strong>741741</strong>
       </p>
     </footer>
   )
