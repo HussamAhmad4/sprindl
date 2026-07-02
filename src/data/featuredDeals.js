@@ -1,7 +1,45 @@
 export const FEATURED_DEALS = [
-  { label: '🎁 GitHub Student Pack', desc: 'Free developer tools', url: 'https://education.github.com/pack', tag: 'Free' },
+    // ── Student Tech & Software ───────────────────────────────────────────────
+  { label: '🎁 GitHub Student Pack', desc: 'Free developer tools worth $200k+', url: 'https://education.github.com/pack', tag: 'Free' },
   { label: '🎵 Spotify + Hulu', desc: '$5.99/mo for students', url: 'https://www.spotify.com/us/student/', tag: '$5.99/mo' },
   { label: '💻 Adobe CC', desc: '60% off for students', url: 'https://www.adobe.com/creativecloud/buy/students.html', tag: '60% off' },
-  { label: '🛒 Amazon Prime', desc: '6-month free trial', url: 'https://www.amazon.com/joinstudent', tag: 'Free trial' },
-  { label: '📐 Notion', desc: 'Free for students', url: 'https://www.notion.so/product/notion-for-education', tag: 'Free' },
-]
+  { label: '🛒 Amazon Prime', desc: '6-month free trial + 50% off', url: 'https://www.amazon.com/joinstudent', tag: 'Free trial' },
+  { label: '📐 Notion', desc: 'Free for students & educators', url: 'https://www.notion.so/product/notion-for-education', tag: 'Free' },
+  { label: '🖥️ Microsoft 365', desc: 'Free Office suite with .edu email', url: 'https://www.microsoft.com/en-us/education/students', tag: 'Free' },
+  { label: '🔒 NordVPN', desc: 'Up to 67% off student discount', url: 'https://nordvpn.com/student-discount/', tag: '67% off' },
+  { label: '📚 Chegg Study', desc: '$9.95/mo for students (vs $19.95)', url: 'https://www.chegg.com/study', tag: '$9.95/mo' },
+  { label: '🎨 Canva Pro', desc: 'Free for students & teachers', url: 'https://www.canva.com/education/', tag: 'Free' },
+  { label: '🎮 Apple Music', desc: '$5.99/mo student plan', url: 'https://music.apple.com/subscribe', tag: '$5.99/mo' },
+  { label: '🖱️ Figma', desc: 'Free for students with .edu email', url: 'https://www.figma.com/education/', tag: 'Free' },
+  { label: '🛡️ LastPass', desc: 'Free password manager for students', url: 'https://www.lastpass.com/labs/students', tag: 'Free' },
+    // ── CUNY-Specific Opportunities ───────────────────────────────────────────
+  { label: '🏫 CUNY ASAP', desc: 'Free tuition, metro card & textbooks', url: 'https://www.cuny.edu/academics/academic-programs/asap/', tag: 'CUNY' },
+  { label: '🎓 CUNY Scholarships', desc: 'Search all CUNY scholarship programs', url: 'https://www.cuny.edu/financial-aid/scholarships/', tag: 'CUNY' },
+  { label: '💼 CUNY Internships', desc: 'Paid internship portal for CUNY students', url: 'https://www.cuny.edu/current-students/student-affairs/student-services/career-services/', tag: 'CUNY' },
+  { label: '📖 CUNY SPS Online', desc: 'Flexible online degrees & certificates', url: 'https://sps.cuny.edu/', tag: 'CUNY' },
+    // ── Student Career & Internships ──────────────────────────────────────────
+  { label: '💼 Handshake', desc: 'Free student job & internship platform', url: 'https://joinhandshake.com/', tag: 'Free' },
+  { label: '🌐 LinkedIn Premium', desc: '6 months free via GitHub Student Pack', url: 'https://education.github.com/pack', tag: 'Free' },
+  { label: '📜 Coursera', desc: 'Free courses via CUNY & university access', url: 'https://www.coursera.org/for-universities', tag: 'Free' },
+  ]
+
+export const CUNY_SCHOOLS = [
+  { name: 'Baruch College', url: 'https://www.baruch.cuny.edu/', borough: 'Manhattan' },
+  { name: 'Brooklyn College', url: 'https://www.brooklyn.cuny.edu/', borough: 'Brooklyn' },
+  { name: 'City College (CCNY)', url: 'https://www.ccny.cuny.edu/', borough: 'Manhattan' },
+  { name: 'CSI — College of Staten Island', url: 'https://www.csi.cuny.edu/', borough: 'Staten Island' },
+  { name: 'Bronx Community College', url: 'https://www.bcc.cuny.edu/', borough: 'Bronx' },
+  { name: 'Borough of Manhattan CC (BMCC)', url: 'https://www.bmcc.cuny.edu/', borough: 'Manhattan' },
+  { name: 'Hunter College', url: 'https://www.hunter.cuny.edu/', borough: 'Manhattan' },
+  { name: 'John Jay College', url: 'https://www.jjay.cuny.edu/', borough: 'Manhattan' },
+  { name: 'Lehman College', url: 'https://www.lehman.cuny.edu/', borough: 'Bronx' },
+  { name: 'Queens College', url: 'https://www.qc.cuny.edu/', borough: 'Queens' },
+  { name: 'Queensborough CC (QCC)', url: 'https://www.qcc.cuny.edu/', borough: 'Queens' },
+  { name: 'LaGuardia CC', url: 'https://www.laguardia.edu/', borough: 'Queens' },
+  { name: 'Hostos CC', url: 'https://www.hostos.cuny.edu/', borough: 'Bronx' },
+  { name: 'Kingsborough CC', url: 'https://www.kbcc.cuny.edu/', borough: 'Brooklyn' },
+  { name: 'Medgar Evers College', url: 'https://www.mec.cuny.edu/', borough: 'Brooklyn' },
+  { name: 'New York City College of Technology (City Tech)', url: 'https://www.citytech.cuny.edu/', borough: 'Brooklyn' },
+  { name: 'York College', url: 'https://www.york.cuny.edu/', borough: 'Queens' },
+  { name: 'Graduate Center', url: 'https://www.gc.cuny.edu/', borough: 'Manhattan' },
+  ]
