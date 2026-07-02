@@ -12,6 +12,8 @@ const MODE_TITLES = {
   deals:     'Deal Finder — Community Navi',
   campus:    'Campus Finder — Community Navi',
   resources: 'Resource Guide — Community Navi',
+    cuny:          'CUNY Guide — Community Navi',
+    opportunities: 'Student Opportunities — Community Navi',
 }
 
 export default function App() {
@@ -77,5 +79,7 @@ export default function App() {
         />
       )}
     </div>
+      )
+}
   )
 }
