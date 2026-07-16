@@ -1,4 +1,4 @@
-# Community Resource Navigator
+# Sprindl
 
 **AI-powered student toolkit** — find deals, campus programs, CUNY opportunities, internships, scholarships, and public benefits through plain-English conversation.
 
@@ -33,8 +33,8 @@ Ask anything in plain English. The AI returns structured, actionable results wit
 ## Local setup
 
 ```bash
-git clone https://github.com/HussamAhmad4/community-resource-navigator.git
-cd community-resource-navigator
+git clone https://github.com/HussamAhmad4/sprindl.git
+cd sprindl
 npm install
 
 cp .env.example .env
