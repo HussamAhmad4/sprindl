@@ -34,7 +34,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { messages, mode = 'resources' } = req.body ?? {}
+    const { messages, mode = 'resources', profile = null } = req.body ?? {}
     const VALID_MODES = ['resources', 'deals', 'campus', 'cuny', 'opportunities']
     if (!VALID_MODES.includes(mode)) {
       res.status(400).json({ error: 'Invalid mode.' }); return
@@ -45,7 +45,8 @@ export default async function handler(req, res) {
     if (!Array.isArray(messages) || messages.length === 0) {
       res.status(400).json({ error: '"messages" must be a non-empty array.' }); return
     }
-    const result = await getChatResponse(messages, mode)
+    const safeProfile = typeof profile === 'string' && profile.length <= 600 ? profile : null
+    const result = await getChatResponse(messages, mode, safeProfile)
     res.status(200).json({
       reply:     result.reply,
       followUp:  result.followUp,
