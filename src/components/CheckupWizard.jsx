@@ -1,7 +1,10 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { QUESTIONS } from '../checkup/questions.js'
 import { RULES } from '../checkup/rules.js'
 import { evaluate, fmtUSD } from '../checkup/engine.js'
+import { saveProfile } from '../checkup/profile.js'
+
+const SITE_URL = 'https://hussamahmad4.github.io/sprindl/'
 
 function ProgramCard({ rule, onAskNavi }) {
   return (
@@ -31,10 +34,30 @@ function ProgramCard({ rule, onAskNavi }) {
 export default function CheckupWizard({ onBack, onAskNavi }) {
   const [answers, setAnswers] = useState({})
   const [step, setStep] = useState(0)
+  const [shared, setShared] = useState(false)
   const done = step >= QUESTIONS.length
   const results = useMemo(() => (done ? evaluate(answers, RULES) : null), [done, answers])
 
+  // Remember the profile so chat modes can personalize without re-asking.
+  useEffect(() => { if (done) saveProfile(answers) }, [done, answers])
+
   const restart = () => { setAnswers({}); setStep(0) }
+
+  const shareResults = async () => {
+    const { totals } = results
+    const text = totals.potentialMax > 0
+      ? `I just found ${fmtUSD(totals.eligibleMin)}–${fmtUSD(totals.potentialMax)}/year in student benefits I might be missing 💸 Run your own free checkup:`
+      : 'I just ran a free student benefit checkup on Sprindl — see what you might be missing:'
+    try {
+      if (navigator.share) {
+        await navigator.share({ title: 'Sprindl Benefit Checkup', text, url: SITE_URL })
+      } else {
+        await navigator.clipboard.writeText(`${text} ${SITE_URL}`)
+        setShared(true)
+        setTimeout(() => setShared(false), 2000)
+      }
+    } catch { /* user dismissed the share sheet */ }
+  }
 
   if (!done) {
     const q = QUESTIONS[step]
@@ -101,7 +124,12 @@ export default function CheckupWizard({ onBack, onAskNavi }) {
         These are estimates based on published program criteria — not a guarantee of eligibility.
         Amounts vary by situation. Always verify with the official program before making decisions.
       </p>
-      <button type="button" className="btn btn--ghost" onClick={restart}>Retake checkup</button>
+      <div className="checkup__footer-actions">
+        <button type="button" className="btn btn--primary btn--small" onClick={shareResults}>
+          {shared ? 'Link copied ✓' : 'Share results ↗'}
+        </button>
+        <button type="button" className="btn btn--ghost btn--small" onClick={restart}>Retake checkup</button>
+      </div>
     </div>
   )
 }
