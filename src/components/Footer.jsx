@@ -7,7 +7,7 @@ export default function Footer({ minimal }) {
   return (
     <footer className="app-footer">
       <p>
-        Navi provides general information, not professional advice. Always verify with official sources.
+        Sprindl provides general information, not professional advice. Always verify with official sources.
         Crisis support: <strong>988</strong> · Text HOME to <strong>741741</strong>
       </p>
     </footer>
