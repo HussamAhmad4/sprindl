@@ -736,6 +736,7 @@ a { color: var(--primary); }
 .checkup-card__how { margin: 4px 0 12px; font-size: 0.85rem; color: var(--text-soft); }
 .checkup-card__actions { display: flex; gap: 10px; flex-wrap: wrap; }
 .checkup__disclaimer { font-size: 0.78rem; color: var(--text-muted); margin: 20px 0 14px; line-height: 1.5; }
+.checkup__footer-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 8px; }
 
 /* ── Animations ────────────────────────────────────────────────────────── */
 @keyframes fade-up {
