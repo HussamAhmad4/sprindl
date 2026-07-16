@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { profileSummary } from '../checkup/profile.js'
 
 const WELCOME = {
   resources: "Hey, I'm Sprindl! I help students find benefits, financial aid, food assistance, health coverage, and more. What's going on?",
@@ -42,7 +43,7 @@ export function useChat(mode = 'resources') {
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: historyRef.current, mode }),
+        body: JSON.stringify({ messages: historyRef.current, mode, profile: profileSummary() || undefined }),
       })
       const contentType = res.headers.get('content-type')
       if (!contentType || !contentType.includes('application/json')) {
