@@ -2,7 +2,24 @@ import { useState } from 'react'
 import ResourceCard from './ResourceCard.jsx'
 import ProductCard from './ProductCard.jsx'
 import CampusProgramCard from './CampusProgramCard.jsx'
-import ResultsFilter, { sortProducts } from './ResultsFilter.jsx'
+import ResultsFilter from './ResultsFilter.jsx'
+
+function parseMinPrice(priceRange) {
+  if (!priceRange) return Infinity
+  const clean = priceRange.replace(/[^0-9.%]/g, ' ').trim()
+  const nums = clean.match(/\d+(\.\d+)?/g)
+  if (!nums) return 0
+  return parseFloat(nums[0])
+}
+
+function sortProducts(products, sort) {
+  if (!products?.length) return products
+  const copy = [...products]
+  if (sort === 'price-asc') return copy.sort((a, b) => parseMinPrice(a.priceRange) - parseMinPrice(b.priceRange))
+  if (sort === 'price-desc') return copy.sort((a, b) => parseMinPrice(b.priceRange) - parseMinPrice(a.priceRange))
+  if (sort === 'name') return copy.sort((a, b) => a.name.localeCompare(b.name))
+  return copy
+}
 
 export default function MessageBubble({ message, bookmarkHandlers }) {
   const isUser = message.role === 'user'
@@ -15,9 +32,11 @@ export default function MessageBubble({ message, bookmarkHandlers }) {
     onBookmark: add
       ? () => {
           const name = item.name || item.id
-          isBookmarked(name)
-            ? remove(bookmarkHandlers.bookmarks?.find((b) => b.data?.name === name || b.data?.id === name)?.id)
-            : add(type, item)
+          if (isBookmarked(name)) {
+            remove(bookmarkHandlers.bookmarks?.find((b) => b.data?.name === name || b.data?.id === name)?.id)
+          } else {
+            add(type, item)
+          }
         }
       : null,
     isBookmarked: isBookmarked ? isBookmarked(item.name || item.id) : false,
@@ -25,7 +44,7 @@ export default function MessageBubble({ message, bookmarkHandlers }) {
 
   return (
     <div className={`message ${isUser ? 'message--user' : 'message--assistant'}`}>
-      {!isUser && <div className="message__avatar" aria-hidden="true">N</div>}
+      {!isUser && <div className="message__avatar" aria-hidden="true">S</div>}
       <div className="message__content">
         <div className={`bubble ${isUser ? 'bubble--user' : 'bubble--assistant'}`}>{message.content}</div>
         {!isUser && message.followUp && <div className="follow-up">{message.followUp}</div>}

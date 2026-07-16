@@ -1,7 +1,9 @@
 const MODE_META = {
-  deals:     { icon: '🛍️', label: 'Deal Finder' },
-  campus:    { icon: '🎓', label: 'Campus Finder' },
-  resources: { icon: '🧭', label: 'Resource Guide' },
+  deals:         { icon: '🛍️', label: 'Deal Finder' },
+  campus:        { icon: '🎓', label: 'Campus Finder' },
+  cuny:          { icon: '🏫', label: 'CUNY Guide' },
+  opportunities: { icon: '🚀', label: 'Student Opportunities' },
+  resources:     { icon: '🧭', label: 'Resource Guide' },
 }
 
 export default function Header({ mode, onBack, onReset, hasConversation, bookmarkCount, onBookmarksToggle }) {
@@ -14,7 +16,7 @@ export default function Header({ mode, onBack, onReset, hasConversation, bookmar
           <span className="app-header__mode-icon">{meta.icon}</span>
           <div>
             <h1>{meta.label}</h1>
-            <p>Sprindl</p>
+            <p className="wordmark">sprindl<span className="wordmark__dot">.</span></p>
           </div>
         </div>
       </div>
