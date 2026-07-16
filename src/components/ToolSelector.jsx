@@ -20,7 +20,7 @@ export default function ToolSelector({ onSelect, onCheckup }) {
               <div className="home__gradient-bg" aria-hidden="true" />
               <div className="home__hero">
                       <span className="home__badge">For College Students &amp; Young Adults</span>
-                      <h1 className="home__title">Community<br /><span className="home__title-accent">Resource Navi</span></h1>
+                      <h1 className="home__title"><span className="home__title-accent">Sprindl</span></h1>
                       <p className="home__subtitle">AI-powered tools to find discounts, campus programs, CUNY opportunities, and public benefits — through plain conversation.</p>
               </div>
 
