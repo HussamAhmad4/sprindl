@@ -10,11 +10,11 @@ import { useChat } from './hooks/useChat.js'
 import { useBookmarks } from './hooks/useBookmarks.js'
 
 const MODE_TITLES = {
-  deals:     'Deal Finder — Community Navi',
-  campus:    'Campus Finder — Community Navi',
-  resources: 'Resource Guide — Community Navi',
-    cuny:          'CUNY Guide — Community Navi',
-    opportunities: 'Student Opportunities — Community Navi',
+  deals:     'Deal Finder — Sprindl',
+  campus:    'Campus Finder — Sprindl',
+  resources: 'Resource Guide — Sprindl',
+    cuny:          'CUNY Guide — Sprindl',
+    opportunities: 'Student Opportunities — Sprindl',
 }
 
 export default function App() {
@@ -27,7 +27,7 @@ export default function App() {
   const bm = useBookmarks()
 
   useEffect(() => {
-    document.title = view === 'chat' ? (MODE_TITLES[mode] || 'Community Navi') : 'Community Resource Navigator'
+    document.title = view === 'chat' ? (MODE_TITLES[mode] || 'Sprindl') : 'Sprindl'
   }, [view, mode])
 
   const handleSelectTool = (selectedMode) => {
