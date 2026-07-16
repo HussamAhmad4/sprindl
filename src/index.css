@@ -206,15 +206,15 @@ a { color: var(--primary); }
 
 /* Rotating word carousel inside the hero */
 .word-rotator {
-  display: inline-flex; height: 1.12em; overflow: hidden;
+  display: inline-flex; height: 1.18em; overflow: hidden;
   vertical-align: bottom;
 }
 .word-rotator__track {
-  display: flex; flex-direction: column; text-align: left;
+  display: flex; flex-direction: column; text-align: center;
   animation: rotate-words 12.5s var(--ease-out) infinite;
 }
 .word-rotator__track > span {
-  display: block; height: 1.12em; line-height: 1.12;
+  display: block; height: 1.18em; line-height: 1.18;
   background: var(--iris);
   -webkit-background-clip: text; background-clip: text;
   -webkit-text-fill-color: transparent; color: transparent;
@@ -222,11 +222,11 @@ a { color: var(--primary); }
 }
 @keyframes rotate-words {
   0%, 14%      { transform: translateY(0); }
-  20%, 34%     { transform: translateY(-1.12em); }
-  40%, 54%     { transform: translateY(-2.24em); }
-  60%, 74%     { transform: translateY(-3.36em); }
-  80%, 94%     { transform: translateY(-4.48em); }
-  100%         { transform: translateY(-5.6em); }
+  20%, 34%     { transform: translateY(-1.18em); }
+  40%, 54%     { transform: translateY(-2.36em); }
+  60%, 74%     { transform: translateY(-3.54em); }
+  80%, 94%     { transform: translateY(-4.72em); }
+  100%         { transform: translateY(-5.9em); }
 }
 
 .home__subtitle {
@@ -238,7 +238,7 @@ a { color: var(--primary); }
 /* ── Benefit Checkup banner ────────────────────────────────────────────── */
 .checkup-banner {
   display: flex; align-items: center; gap: 16px;
-  width: min(700px, 100%); margin: 4px auto 30px; padding: 18px 22px;
+  width: min(700px, 100%); margin: 4px auto 28px; padding: 18px 22px;
   background:
     linear-gradient(120deg, rgba(52, 211, 153, 0.10), rgba(34, 211, 238, 0.06)) padding-box,
     linear-gradient(120deg, rgba(52, 211, 153, 0.55), rgba(34, 211, 238, 0.35)) border-box;
@@ -268,7 +268,7 @@ a { color: var(--primary); }
 /* ── Deal filter strip ─────────────────────────────────────────────────── */
 .deal-filter-strip {
   display: flex; flex-wrap: wrap; gap: 8px;
-  margin-bottom: 14px; width: 100%; max-width: 960px;
+  margin-bottom: 12px; width: 100%; max-width: 960px;
   justify-content: center;
   animation: fade-up 0.5s 0.24s var(--ease-out) both;
 }
@@ -286,8 +286,8 @@ a { color: var(--primary); }
 
 /* ── Featured deals strip ──────────────────────────────────────────────── */
 .featured-strip {
-  display: flex; align-items: center; gap: 12px;
-  width: 100%; max-width: 960px; margin-bottom: 26px;
+  display: flex; align-items: center; justify-content: center; gap: 12px;
+  width: 100%; max-width: 960px; margin-bottom: 28px;
   animation: fade-up 0.5s 0.28s var(--ease-out) both;
   min-width: 0;
 }
@@ -298,8 +298,6 @@ a { color: var(--primary); }
 .featured-strip__scroll {
   display: flex; gap: 8px; overflow-x: auto; padding: 2px;
   scrollbar-width: none; -ms-overflow-style: none;
-  mask-image: linear-gradient(90deg, #000 92%, transparent);
-  -webkit-mask-image: linear-gradient(90deg, #000 92%, transparent);
 }
 .featured-strip__scroll::-webkit-scrollbar { display: none; }
 
@@ -325,7 +323,7 @@ a { color: var(--primary); }
 
 /* ── CUNY schools section ──────────────────────────────────────────────── */
 .cuny-schools-section {
-  width: 100%; max-width: 960px; margin-bottom: 24px;
+  width: 100%; max-width: 960px; margin-bottom: 28px;
   animation: fade-up 0.5s 0.3s var(--ease-out) both;
 }
 .cuny-schools-toggle {
@@ -350,8 +348,16 @@ a { color: var(--primary); }
 
 /* ── Tool grid ─────────────────────────────────────────────────────────── */
 .tool-grid {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(272px, 1fr));
+  display: grid; grid-template-columns: repeat(6, 1fr);
   gap: 18px; width: 100%; max-width: 960px;
+}
+.tool-card { grid-column: span 2; }
+.tool-card:nth-child(4) { grid-column: 2 / span 2; }
+.tool-card:nth-child(5) { grid-column: 4 / span 2; }
+@media (max-width: 880px) {
+  .tool-grid { grid-template-columns: repeat(2, 1fr); }
+  .tool-card, .tool-card:nth-child(4) { grid-column: auto; }
+  .tool-card:nth-child(5) { grid-column: 1 / -1; }
 }
 .tool-card {
   border: 1px solid transparent; border-radius: var(--radius-xl);
@@ -379,11 +385,17 @@ a { color: var(--primary); }
 }
 .tool-card:hover::before { opacity: 1; }
 .tool-card__icon {
-  font-size: 1.65rem; width: 54px; height: 54px;
+  font-size: 1.6rem; width: 52px; height: 52px;
   display: flex; align-items: center; justify-content: center;
   background: rgba(129, 140, 248, 0.1);
   border: 1px solid rgba(129, 140, 248, 0.22);
-  border-radius: 16px; margin-bottom: 4px;
+  border-radius: 15px; margin-bottom: 4px;
+}
+@supports (color: color-mix(in srgb, red 50%, blue)) {
+  .tool-card__icon {
+    background: color-mix(in srgb, var(--card-accent, #818cf8) 11%, transparent);
+    border-color: color-mix(in srgb, var(--card-accent, #818cf8) 26%, transparent);
+  }
 }
 .tool-card__label {
   font-family: var(--font-display);
@@ -515,7 +527,7 @@ a { color: var(--primary); }
 .resource-card__phone { font-size: 0.82rem; color: var(--primary); text-decoration: none; font-weight: 600; }
 
 /* Product cards */
-.product-card { padding: 18px; display: flex; flex-direction: column; gap: 10px; }
+.product-card { padding: 16px; display: flex; flex-direction: column; gap: 10px; }
 .product-card:hover { border-color: rgba(129,140,248,0.45); box-shadow: 0 6px 26px rgba(129,140,248,0.1); }
 .product-card__top { display: flex; align-items: center; gap: 12px; }
 .product-card__header { display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 0; }
@@ -536,7 +548,7 @@ a { color: var(--primary); }
 .product-card__actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-top: auto; }
 
 /* Campus program cards */
-.campus-card { padding: 18px; display: flex; flex-direction: column; gap: 9px; }
+.campus-card { padding: 16px; display: flex; flex-direction: column; gap: 9px; }
 .campus-card:hover { border-color: rgba(34,211,238,0.4); box-shadow: 0 6px 26px rgba(34,211,238,0.08); }
 .campus-card__header-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
 .campus-card__header { display: flex; flex-direction: column; gap: 4px; }
@@ -754,6 +766,7 @@ a { color: var(--primary); }
   .home__wordmark { margin-bottom: 22px; }
   .home__hero { margin-bottom: 26px; }
   .tool-grid { grid-template-columns: 1fr; gap: 14px; }
+  .tool-card, .tool-card:nth-child(4), .tool-card:nth-child(5) { grid-column: auto; }
   .tool-card { padding: 22px 20px 20px; }
   .app-header { padding: 11px 14px; }
   .app-header .btn--ghost { padding: 7px 12px; font-size: 0.8rem; }
