@@ -2,7 +2,7 @@
 
 **AI-powered student toolkit** — find deals, campus programs, CUNY opportunities, internships, scholarships, and public benefits through plain-English conversation.
 
-**Live demo:** _coming soon_ · Built with React 19, Vite, and the Claude API.
+**Live demo:** [hussamahmad4.github.io/sprindl](https://hussamahmad4.github.io/sprindl/) · Built with React 19, Vite, and the Claude API.
 
 ## What it does
 
