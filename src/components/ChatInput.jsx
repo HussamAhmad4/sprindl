@@ -8,7 +8,7 @@ const PLACEHOLDERS = {
   resources: 'e.g. "I need help affording groceries this week"',
 }
 
-export default function ChatInput({ onSend, isLoading, mode }) {
+export default function ChatInput({ onSend, isLoading, mode, placeholder }) {
   const [value, setValue] = useState('')
   const taRef = useRef(null)
 
@@ -31,7 +31,7 @@ export default function ChatInput({ onSend, isLoading, mode }) {
       <label htmlFor="chat-message" className="sr-only">Type your message</label>
       <textarea
         id="chat-message" rows={1} ref={taRef}
-        placeholder={PLACEHOLDERS[mode] || PLACEHOLDERS.resources}
+        placeholder={placeholder || PLACEHOLDERS[mode] || PLACEHOLDERS.resources}
         value={value}
         onChange={(e) => { setValue(e.target.value); autoGrow() }}
         onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); submit() } }}

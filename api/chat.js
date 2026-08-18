@@ -1,4 +1,5 @@
 import { getChatResponse, lookupResources } from '../lib/chatHandler.js'
+import { isDepartmentMode } from '../src/data/departments.js'
 
 // In-memory rate limiter: 10 requests per minute per IP
 const rateLimits = new Map()
@@ -36,7 +37,7 @@ export default async function handler(req, res) {
   try {
     const { messages, mode = 'resources', profile = null } = req.body ?? {}
     const VALID_MODES = ['resources', 'deals', 'campus', 'cuny', 'opportunities']
-    if (!VALID_MODES.includes(mode)) {
+    if (!VALID_MODES.includes(mode) && !isDepartmentMode(mode)) {
       res.status(400).json({ error: 'Invalid mode.' }); return
     }
     if (Array.isArray(messages) && messages.some((m) => typeof m.content !== 'string' || m.content.length > 4000)) {

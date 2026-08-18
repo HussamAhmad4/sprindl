@@ -6,6 +6,7 @@ import ChatInput from './components/ChatInput.jsx'
 import Footer from './components/Footer.jsx'
 import BookmarksPanel from './components/BookmarksPanel.jsx'
 import CheckupWizard from './components/CheckupWizard.jsx'
+import CommunityChat from './components/CommunityChat.jsx'
 import { useChat } from './hooks/useChat.js'
 import { useBookmarks } from './hooks/useBookmarks.js'
 
@@ -56,6 +57,7 @@ export default function App() {
       <div className="app-shell app-shell--home">
         <CheckupWizard onBack={() => setView('home')} onAskNavi={handleAskNavi} />
         <Footer minimal />
+        <CommunityChat />
       </div>
     )
   }
@@ -65,6 +67,7 @@ export default function App() {
       <div className="app-shell app-shell--home">
         <ToolSelector onSelect={handleSelectTool} onCheckup={() => setView('checkup')} />
         <Footer minimal />
+        <CommunityChat />
       </div>
     )
   }
@@ -105,6 +108,7 @@ export default function App() {
           onClose={() => setBookmarksOpen(false)}
         />
       )}
+      <CommunityChat />
     </div>
       )
 }

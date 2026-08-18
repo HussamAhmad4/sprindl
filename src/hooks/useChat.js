@@ -11,26 +11,26 @@ const WELCOME = {
 
 let idCounter = 0
 const nextId = () => `msg-${Date.now()}-${idCounter++}`
-const makeWelcome = (mode) => ({
+const makeWelcome = (mode, welcomeText) => ({
   id: 'welcome',
   role: 'assistant',
-  content: WELCOME[mode] || WELCOME.resources,
+  content: welcomeText || WELCOME[mode] || WELCOME.resources,
   resources: [],
   products: [],
   programs: [],
 })
 
-export function useChat(mode = 'resources') {
-  const [messages, setMessages] = useState([makeWelcome(mode)])
+export function useChat(mode = 'resources', welcomeText = null) {
+  const [messages, setMessages] = useState([makeWelcome(mode, welcomeText)])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(null)
   const historyRef = useRef([])
 
   useEffect(() => {
     historyRef.current = []
-    setMessages([makeWelcome(mode)])
+    setMessages([makeWelcome(mode, welcomeText)])
     setError(null)
-  }, [mode])
+  }, [mode, welcomeText])
 
   const sendMessage = useCallback(async (text) => {
     const trimmed = text.trim()
@@ -68,9 +68,9 @@ export function useChat(mode = 'resources') {
 
   const reset = useCallback(() => {
     historyRef.current = []
-    setMessages([makeWelcome(mode)])
+    setMessages([makeWelcome(mode, welcomeText)])
     setError(null)
-  }, [mode])
+  }, [mode, welcomeText])
 
   return { messages, isLoading, error, sendMessage, reset }
 }
