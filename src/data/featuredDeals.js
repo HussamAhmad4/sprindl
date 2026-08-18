@@ -21,25 +21,33 @@ export const FEATURED_DEALS = [
   { label: '💼 Handshake', desc: 'Free student job & internship platform', url: 'https://joinhandshake.com/', tag: 'Free' },
   { label: '🌐 LinkedIn Premium', desc: '6 months free via GitHub Student Pack', url: 'https://education.github.com/pack', tag: 'Free' },
   { label: '📜 Coursera', desc: 'Free courses via CUNY & university access', url: 'https://www.coursera.org/for-universities', tag: 'Free' },
+    // ── Opportunities & Money ─────────────────────────────────────────────────
+  { label: '🔬 NSF REU', desc: 'Paid summer research for undergrads', url: 'https://www.nsf.gov/crssprgm/reu/', tag: 'Paid' },
+  { label: '🗽 NYC SYEP', desc: 'Paid NYC summer jobs for ages 14–24', url: 'https://www.nyc.gov/site/dycd/services/jobs-internships/summer-youth-employment-program-syep.page', tag: 'Paid' },
+  { label: '🪜 Ladders for Leaders', desc: 'Paid professional NYC internships', url: 'https://www.nyc.gov/site/dycd/services/jobs-internships/ladders-for-leaders.page', tag: 'Paid' },
+  { label: '💻 CodePath', desc: 'Free tech courses + career support', url: 'https://www.codepath.org/', tag: 'Free' },
+  { label: '🌈 ColorStack', desc: 'Community + career help for Black & Latinx CS students', url: 'https://www.colorstack.org/', tag: 'Free' },
+  { label: '🤖 Break Through Tech AI', desc: 'Free AI/ML program with industry projects', url: 'https://www.breakthroughtech.org/programs/the-ai-program/', tag: 'Free' },
+  { label: '🎫 Fair Fares NYC', desc: 'Half-price subway & bus rides', url: 'https://www.nyc.gov/site/fairfares/index.page', tag: 'NYC' },
+  { label: '🍎 SNAP for Students', desc: 'Monthly grocery money — many students qualify', url: 'https://www.fns.usda.gov/snap/students', tag: 'Benefits' },
+  { label: '📝 FAFSA', desc: 'Unlock federal grants & work-study', url: 'https://studentaid.gov/h/apply-for-aid/fafsa', tag: 'Money' },
+  { label: '🗂️ TAP (NY State)', desc: 'Up to $5,665/yr for NY students', url: 'https://www.hesc.ny.gov/find-aid/nys-grants-scholarships/tuition-assistance-program', tag: 'Money' },
   ]
 
-export const CUNY_SCHOOLS = [
-  { name: 'Baruch College', url: 'https://www.baruch.cuny.edu/', borough: 'Manhattan' },
-  { name: 'Brooklyn College', url: 'https://www.brooklyn.cuny.edu/', borough: 'Brooklyn' },
-  { name: 'City College (CCNY)', url: 'https://www.ccny.cuny.edu/', borough: 'Manhattan' },
-  { name: 'CSI — College of Staten Island', url: 'https://www.csi.cuny.edu/', borough: 'Staten Island' },
-  { name: 'Bronx Community College', url: 'https://www.bcc.cuny.edu/', borough: 'Bronx' },
-  { name: 'Borough of Manhattan CC (BMCC)', url: 'https://www.bmcc.cuny.edu/', borough: 'Manhattan' },
-  { name: 'Hunter College', url: 'https://www.hunter.cuny.edu/', borough: 'Manhattan' },
-  { name: 'John Jay College', url: 'https://www.jjay.cuny.edu/', borough: 'Manhattan' },
-  { name: 'Lehman College', url: 'https://www.lehman.cuny.edu/', borough: 'Bronx' },
-  { name: 'Queens College', url: 'https://www.qc.cuny.edu/', borough: 'Queens' },
-  { name: 'Queensborough CC (QCC)', url: 'https://www.qcc.cuny.edu/', borough: 'Queens' },
-  { name: 'LaGuardia CC', url: 'https://www.laguardia.edu/', borough: 'Queens' },
-  { name: 'Hostos CC', url: 'https://www.hostos.cuny.edu/', borough: 'Bronx' },
-  { name: 'Kingsborough CC', url: 'https://www.kbcc.cuny.edu/', borough: 'Brooklyn' },
-  { name: 'Medgar Evers College', url: 'https://www.mec.cuny.edu/', borough: 'Brooklyn' },
-  { name: 'New York City College of Technology (City Tech)', url: 'https://www.citytech.cuny.edu/', borough: 'Brooklyn' },
-  { name: 'York College', url: 'https://www.york.cuny.edu/', borough: 'Queens' },
-  { name: 'Graduate Center', url: 'https://www.gc.cuny.edu/', borough: 'Manhattan' },
-  ]
+// Rotate the strip daily: a date-seeded shuffle means students see a different
+// mix each day without any backend. (Deterministic per day — stable within a visit.)
+export function dailyFeatured(pool = FEATURED_DEALS, count = 12, date = new Date()) {
+  const seedBase = date.getFullYear() * 10000 + (date.getMonth() + 1) * 100 + date.getDate()
+  let seed = seedBase
+  const rand = () => {
+    seed = (seed * 1664525 + 1013904223) % 4294967296
+    return seed / 4294967296
+  }
+  const shuffled = [...pool]
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(rand() * (i + 1))
+    ;[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
+  }
+  return shuffled.slice(0, Math.min(count, shuffled.length))
+}
+

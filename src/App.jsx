@@ -7,16 +7,23 @@ import Footer from './components/Footer.jsx'
 import BookmarksPanel from './components/BookmarksPanel.jsx'
 import CheckupWizard from './components/CheckupWizard.jsx'
 import CommunityChat from './components/CommunityChat.jsx'
+import ContactsDirectory from './components/ContactsDirectory.jsx'
 import { useChat } from './hooks/useChat.js'
 import { useBookmarks } from './hooks/useBookmarks.js'
 
 const MODE_TITLES = {
   deals:     'Deal Finder — Sprindl',
-  campus:    'Campus Finder — Sprindl',
+  campus:    'CSI Campus Guide — Sprindl',
   resources: 'Resource Guide — Sprindl',
     cuny:          'CUNY Guide — Sprindl',
     opportunities: 'Student Opportunities — Sprindl',
 }
+
+const TopBar = () => (
+  <div className="topbar">
+    Independent student-built resource for the College of Staten Island (CUNY) — not an official CSI service
+  </div>
+)
 
 export default function App() {
   const [view, setView]               = useState('home')
@@ -55,7 +62,19 @@ export default function App() {
   if (view === 'checkup') {
     return (
       <div className="app-shell app-shell--home">
+        <TopBar />
         <CheckupWizard onBack={() => setView('home')} onAskNavi={handleAskNavi} />
+        <Footer minimal />
+        <CommunityChat />
+      </div>
+    )
+  }
+
+  if (view === 'contacts') {
+    return (
+      <div className="app-shell app-shell--home">
+        <TopBar />
+        <ContactsDirectory onBack={() => setView('home')} />
         <Footer minimal />
         <CommunityChat />
       </div>
@@ -65,7 +84,8 @@ export default function App() {
   if (view === 'home') {
     return (
       <div className="app-shell app-shell--home">
-        <ToolSelector onSelect={handleSelectTool} onCheckup={() => setView('checkup')} />
+        <TopBar />
+        <ToolSelector onSelect={handleSelectTool} onCheckup={() => setView('checkup')} onContacts={() => setView('contacts')} />
         <Footer minimal />
         <CommunityChat />
       </div>
@@ -81,6 +101,7 @@ export default function App() {
 
   return (
     <div className="app-shell">
+      <TopBar />
       <Header
         mode={mode}
         onBack={() => setView('home')}

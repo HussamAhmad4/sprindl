@@ -1,6 +1,6 @@
 const MODE_META = {
   deals:         { icon: '🛍️', label: 'Deal Finder' },
-  campus:        { icon: '🎓', label: 'Campus Finder' },
+  campus:        { icon: '🎓', label: 'CSI Campus Guide' },
   cuny:          { icon: '🏫', label: 'CUNY Guide' },
   opportunities: { icon: '🚀', label: 'Student Opportunities' },
   resources:     { icon: '🧭', label: 'Resource Guide' },

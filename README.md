@@ -2,7 +2,7 @@
 
 # Sprindl
 
-**Your shortcut to student deals, scholarships, public benefits & campus programs.**
+**The all-in-one benefits, money & resource guide for College of Staten Island (CUNY) students.**
 
 [![CI](https://github.com/HussamAhmad4/sprindl/actions/workflows/ci.yml/badge.svg)](https://github.com/HussamAhmad4/sprindl/actions/workflows/ci.yml)
 [![Link check](https://github.com/HussamAhmad4/sprindl/actions/workflows/link-check.yml/badge.svg)](https://github.com/HussamAhmad4/sprindl/actions/workflows/link-check.yml)
@@ -20,13 +20,13 @@
 
 **💰 Benefit Checkup** — answer 8 questions, get an estimated dollar amount of benefits you may be missing (Pell, TAP, Excelsior, SNAP, Fair Fares, and more), each with an official link. Share your results with one tap.
 
-Plus five AI-powered chat tools:
+Plus AI-powered chat tools and a Community Chat with per-department AI helpers (clearly labeled as AI, never posing as CSI staff):
 
 | Tool | What it finds |
 |------|--------------|
 | 🛍️ **Deal Finder** | Student discounts at Best Buy, Apple, Adobe, Spotify, GitHub, Amazon, and more — filterable by category |
-| 🎓 **Campus Finder** | Tutoring, scholarships, food pantries, career services, and clubs at your specific school |
-| 🏫 **CUNY Guide** | ASAP, SEEK, TAP, Excelsior, Single Stop, CUNY Start, Reconnect, and programs across all CUNY campuses |
+| 🎓 **CSI Campus Guide** | Tutoring, scholarships, the food pantry, career services, and clubs at the College of Staten Island |
+| 📇 **Help & Contacts** | Verified CSI office emails, phones & locations — plus the FAFSA school code (002698) |
 | 🚀 **Student Opportunities** | Paid internships, research programs (NSF REU, NIH), fellowships, scholarships, AmeriCorps, SYEP |
 | 🧭 **Resource Guide** | FAFSA, SNAP, Medicaid, PSLF, mental health lines, legal aid — 40+ real programs |
 
