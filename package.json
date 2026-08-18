@@ -2,7 +2,7 @@
   "name": "sprindl",
   "private": true,
   "version": "1.0.0",
-  "description": "An AI-powered web tool that helps community members find public benefits and local resources through plain-English conversation.",
+  "description": "An AI-powered guide that helps College of Staten Island (CUNY) students find benefits, scholarships, discounts, and campus resources through plain-English conversation.",
   "type": "module",
   "scripts": {
     "dev": "vite",

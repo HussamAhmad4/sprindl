@@ -2,8 +2,8 @@ import { useRef, useState } from 'react'
 
 const PLACEHOLDERS = {
   deals: 'e.g. "I need a laptop for college under $700"',
-  campus: 'e.g. "I go to CSI CUNY — are there tutoring programs?"',
-  cuny: 'e.g. "I go to Hunter — how do I apply for SEEK?"',
+  campus: 'e.g. "are there tutoring programs for calculus?"',
+  cuny: 'e.g. "how do I apply for SEEK at CSI?"',
   opportunities: 'e.g. "junior CS major looking for paid summer internships"',
   resources: 'e.g. "I need help affording groceries this week"',
 }

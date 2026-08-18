@@ -12,7 +12,7 @@ export const QUESTIONS = [
   },
   {
     field: 'cuny',
-    question: 'Do you attend a CUNY school?',
+    question: 'Do you attend the College of Staten Island (or another CUNY school)?',
     options: [
       { value: true, label: 'Yes' },
       { value: false, label: 'No' },

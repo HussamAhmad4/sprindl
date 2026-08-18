@@ -114,13 +114,13 @@ export const RULES = [
   },
   {
     id: 'campus-pantry',
-    name: 'Campus Food Pantry',
-    org: 'Your college',
+    name: 'CSI Food Pantry',
+    org: 'College of Staten Island',
     estimatedValue: { min: 240, max: 600, display: 'free groceries on campus' },
     cash: true,
     confidence: 'high',
-    why: 'Most campuses (every CUNY) run a free food pantry for enrolled students. No income proof needed.',
-    howToApply: 'Search "[your school] food pantry" or ask student services — usually just show your student ID.',
+    why: 'CSI, like every CUNY campus, runs a free food pantry for enrolled students. No income proof needed.',
+    howToApply: 'Ask CSI Student Services about the campus food pantry — usually you just show your student ID. The CUNY pantry list has current details.',
     link: 'https://www.cuny.edu/current-students/student-affairs/student-services/food-pantries/',
     criteria: [
       { field: 'enrollment', op: 'in', value: ['full', 'part'], label: 'enrollment status' },
@@ -130,12 +130,12 @@ export const RULES = [
   {
     id: 'emergency-aid',
     name: 'Emergency Student Grants',
-    org: 'Your college',
+    org: 'College of Staten Island',
     estimatedValue: { min: 0, max: 1500, display: 'one-time crisis grants' },
     cash: true,
     confidence: 'medium',
     why: 'Many colleges quietly offer one-time grants for rent, food, or medical emergencies.',
-    howToApply: 'Email your financial aid office or Dean of Students and ask about "emergency grants".',
+    howToApply: 'Email CSI Financial Aid (financialaid@csi.cuny.edu) or the Dean of Students and ask about "emergency grants".',
     link: 'https://studentaid.gov/resources/prepare-for-college/students/heerf',
     criteria: [
       { field: 'enrollment', op: 'in', value: ['full', 'part'], label: 'enrollment status' },
@@ -149,7 +149,7 @@ export const RULES = [
     estimatedValue: { min: 0, max: 0, display: 'free benefits screening, legal aid & tax prep' },
     cash: false,
     confidence: 'high',
-    why: 'A free office on every CUNY campus that screens you for ALL public benefits and files the paperwork with you.',
+    why: 'A free CUNY office that screens you for ALL public benefits and files the paperwork with you — available to CSI students.',
     howToApply: 'Walk into the Single Stop office on your campus or book online.',
     link: 'https://www.cuny.edu/current-students/student-affairs/student-services/single-stop/',
     criteria: [

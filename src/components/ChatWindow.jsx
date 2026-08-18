@@ -10,16 +10,16 @@ const STARTERS = {
     "What tech discounts should every college student know about?",
   ],
   campus: [
-    "I go to CSI CUNY — what tutoring is available?",
-    "Are there scholarships specific to my campus?",
-    "How do I find internships through my school?",
-    "Does my campus have a food pantry?",
+    "What tutoring is available at CSI?",
+    "What scholarships can CSI students apply for?",
+    "Am I eligible for SEEK or ASAP?",
+    "Where is the CSI food pantry?",
   ],
   cuny: [
-    "I go to CSI \u2014 am I eligible for ASAP or SEEK?",
+    "Am I eligible for ASAP or SEEK at CSI?",
     "How do I apply for TAP and the Excelsior Scholarship?",
     "What is Single Stop and what can it do for me?",
-    "Does my CUNY campus have a food pantry?",
+    "Where is the CSI food pantry?",
   ],
   opportunities: [
     "I'm a junior CS major looking for a paid summer internship.",

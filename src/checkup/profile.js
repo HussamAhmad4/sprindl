@@ -6,7 +6,7 @@ const KEY = 'sprindl_profile'
 
 const LABELS = {
   state:      { NY: 'lives in New York State', other: 'lives outside New York' },
-  cuny:       { true: 'attends a CUNY school', false: 'does not attend a CUNY school' },
+  cuny:       { true: 'attends CSI (CUNY)', false: 'does not attend a CUNY school' },
   enrollment: { full: 'is enrolled full-time', part: 'is enrolled part-time', none: 'is not currently enrolled' },
   income:     { under30k: 'household income is under $30k', '30to60k': 'household income is $30k–$60k', '60to125k': 'household income is $60k–$125k', over125k: 'household income is over $125k' },
   age:        { '18to23': 'is 18–23 years old', '24to25': 'is 24–25 years old', '26plus': 'is 26 or older' },

@@ -1,40 +1,87 @@
-import { useState } from 'react'
-import { FEATURED_DEALS, CUNY_SCHOOLS } from '../data/featuredDeals.js'
+import { useMemo, useRef, useState } from 'react'
+import { FEATURED_DEALS, dailyFeatured } from '../data/featuredDeals.js'
 
 const TOOLS = [
-  { mode: 'deals', icon: '🛍️', label: 'Deal Finder', desc: 'Student discounts on tech, software & subscriptions', accent: '#818cf8', glow: 'rgba(129,140,248,0.25)', badge: null },
-  { mode: 'campus', icon: '🎓', label: 'Campus Finder', desc: 'Tutoring, scholarships, food pantries, clubs at your school', accent: '#22d3ee', glow: 'rgba(34,211,238,0.25)', badge: null },
-  { mode: 'cuny', icon: '🏫', label: 'CUNY Guide', desc: 'ASAP, SEEK, TAP, Excelsior, Single Stop & all CUNY programs', accent: '#f59e0b', glow: 'rgba(245,158,11,0.25)', badge: 'NYC' },
-  { mode: 'opportunities', icon: '🚀', label: 'Student Opportunities', desc: 'Paid internships, scholarships, research programs & fellowships', accent: '#a855f7', glow: 'rgba(168,85,247,0.25)', badge: 'New' },
-  { mode: 'resources', icon: '🧭', label: 'Resource Guide', desc: 'FAFSA, SNAP, Medicaid, mental health, legal aid — 28+ programs', accent: '#34d399', glow: 'rgba(52,211,153,0.25)', badge: null },
+  { mode: 'deals', icon: '🛍️', label: 'Deal Finder', desc: 'Student discounts on tech, software & subscriptions', accent: '#14418f', glow: 'rgba(20,65,143,0.12)', badge: null },
+  { mode: 'campus', icon: '🎓', label: 'CSI Campus Guide', desc: 'Tutoring, scholarships, SEEK, ASAP, the food pantry & every CUNY program — as they apply at CSI', accent: '#8a1e41', glow: 'rgba(138,30,65,0.10)', badge: 'CSI' },
+  { mode: 'opportunities', icon: '🚀', label: 'Student Opportunities', desc: 'Paid internships, scholarships, research programs & fellowships', accent: '#0e7490', glow: 'rgba(14,116,144,0.10)', badge: null },
+  { mode: 'resources', icon: '🧭', label: 'Resource Guide', desc: 'FAFSA, SNAP, Medicaid, mental health, legal aid — 40+ verified programs', accent: '#0f766e', glow: 'rgba(15,118,110,0.10)', badge: null },
 ]
 
-const DEAL_CATEGORIES = ['All', 'Free', 'CUNY', '$5.99/mo', '60% off', 'Free trial', '67% off']
+const CSI_QUICK_LINKS = [
+  { icon: '🎓', label: 'CUNYfirst', url: 'https://home.cunyfirst.cuny.edu/' },
+  { icon: '📖', label: 'Brightspace', url: 'https://brightspace.cuny.edu/' },
+  { icon: '💰', label: 'Financial Aid', url: 'https://www.csi.cuny.edu/admissions/paying-college/financial-aid' },
+  { icon: '📚', label: 'Tutoring', url: 'https://www.csi.cuny.edu/students/tutoring' },
+  { icon: '🏛️', label: 'Library', url: 'https://www.library.csi.cuny.edu/' },
+  { icon: '🖥️', label: 'Tech Help Desk', url: 'https://www.csi.cuny.edu/students/technology-help-desk' },
+  { icon: '🧭', label: 'Academic Advisement', url: 'https://www.csi.cuny.edu/students/academic-advisement' },
+  { icon: '💼', label: 'Career Center', url: 'https://www.csi.cuny.edu/campus-life/student-services/center-career-and-professional-development' },
+  { icon: '💚', label: 'Counseling', url: 'https://www.csi.cuny.edu/students/counseling-center' },
+  { icon: '🗂️', label: 'Registrar', url: 'https://www.csi.cuny.edu/students/registrar' },
+  { icon: '🩺', label: 'Health & Wellness', url: 'https://www.csi.cuny.edu/campus-life/student-services/health-and-wellness-services' },
+  { icon: '♿', label: 'Accessibility Services', url: 'https://www.csi.cuny.edu/campus-life/office-accessibility-services' },
+  { icon: '🎖️', label: 'Veterans Support', url: 'https://www.csi.cuny.edu/admissions/applying-csi/veterans' },
+  { icon: '🎉', label: 'Student Involvement', url: 'https://www.csi.cuny.edu/campus-life/student-involvement' },
+  { icon: '🐬', label: 'CSI Athletics', url: 'https://csidolphins.com/' },
+  { icon: '🔎', label: 'CUNY Class Search', url: 'https://globalsearch.cuny.edu/CFGlobalSearchTool/search.jsp' },
+]
 
-const ROTATING_WORDS = ['student deals', 'scholarships', 'public benefits', 'paid internships', 'campus programs']
+const ROTATING_WORDS = ['scholarships', 'FAFSA & TAP help', 'paid internships', 'student discounts', 'campus programs']
 
-export default function ToolSelector({ onSelect, onCheckup }) {
+export default function ToolSelector({ onSelect, onCheckup, onContacts }) {
   const [dealFilter, setDealFilter] = useState('All')
-  const [showCunySchools, setShowCunySchools] = useState(false)
-  const filteredDeals = dealFilter === 'All' ? FEATURED_DEALS : FEATURED_DEALS.filter((d) => d.tag === dealFilter)
+
+  // Daily-rotating featured strip: a different mix of deals & opportunities each day
+  const featured = useMemo(() => dailyFeatured(FEATURED_DEALS, 14), [])
+  const dealCategories = useMemo(() => ['All', ...new Set(featured.map((d) => d.tag))], [featured])
+  const filteredDeals = dealFilter === 'All' ? featured : featured.filter((d) => d.tag === dealFilter)
+
+  // Edge-hover auto-scroll: mouse near the right edge scrolls right, near the left scrolls left
+  const scrollRef = useRef(null)
+  const rafRef = useRef(null)
+  const speedRef = useRef(0)
+
+  const stepScroll = () => {
+    const el = scrollRef.current
+    if (!el || speedRef.current === 0) { rafRef.current = null; return }
+    el.scrollLeft += speedRef.current
+    rafRef.current = requestAnimationFrame(stepScroll)
+  }
+
+  const handleStripMove = (e) => {
+    const el = scrollRef.current
+    if (!el) return
+    const rect = el.getBoundingClientRect()
+    const x = (e.clientX - rect.left) / rect.width
+    if (x > 0.72) speedRef.current = (x - 0.72) * 22
+    else if (x < 0.28) speedRef.current = -(0.28 - x) * 22
+    else speedRef.current = 0
+    if (speedRef.current !== 0 && !rafRef.current) rafRef.current = requestAnimationFrame(stepScroll)
+  }
+
+  const handleStripLeave = () => {
+    speedRef.current = 0
+    if (rafRef.current) { cancelAnimationFrame(rafRef.current); rafRef.current = null }
+  }
 
   return (
     <div className="home">
       <div className="home__gradient-bg" aria-hidden="true" />
       <div className="home__wordmark wordmark" aria-label="Sprindl">sprindl<span className="wordmark__dot">.</span></div>
       <div className="home__hero">
-        <span className="home__badge">For College Students &amp; Young Adults</span>
+        <span className="home__badge">For College of Staten Island Students</span>
         <h1 className="home__title">
-          Your shortcut to<br />
+          Your CSI shortcut to<br />
           <span className="word-rotator" aria-hidden="true">
             <span className="word-rotator__track">
               {ROTATING_WORDS.map((w) => <span key={w}>{w}</span>)}
               <span>{ROTATING_WORDS[0]}</span>
             </span>
           </span>
-          <span className="sr-only">student deals, scholarships, public benefits, paid internships, and campus programs</span>
+          <span className="sr-only">scholarships, FAFSA and TAP help, paid internships, student discounts, and campus programs</span>
         </h1>
-        <p className="home__subtitle">AI-powered tools to find discounts, campus programs, CUNY opportunities, and public benefits — through plain conversation.</p>
+        <p className="home__subtitle">One place to find money, campus programs, CUNY benefits, and real CSI office contacts — through plain-English conversation.</p>
       </div>
 
       <button type="button" className="checkup-banner" onClick={onCheckup}>
@@ -47,35 +94,35 @@ export default function ToolSelector({ onSelect, onCheckup }) {
       </button>
 
       <div className="deal-filter-strip" aria-label="Filter deals">
-        {DEAL_CATEGORIES.map((cat) => (
+        {dealCategories.map((cat) => (
           <button key={cat} type="button" className={`deal-filter-btn${dealFilter === cat ? ' deal-filter-btn--active' : ''}`} onClick={() => setDealFilter(cat)}>{cat}</button>
         ))}
       </div>
 
-      <div className="featured-strip" aria-label="Featured deals">
-        <span className="featured-strip__label">⚡ Top deals</span>
-        <div className="featured-strip__scroll">
-          {filteredDeals.map((deal) => (
-            <a key={deal.label} href={deal.url} target="_blank" rel="noreferrer" className={`featured-chip${deal.tag === 'CUNY' ? ' featured-chip--cuny' : ''}`} title={deal.desc}>
-              {deal.label}<span className="featured-chip__tag">{deal.tag}</span>
-            </a>
-          ))}
-        </div>
-      </div>
-
-      <div className="cuny-schools-section">
-        <button type="button" className="cuny-schools-toggle" onClick={() => setShowCunySchools((v) => !v)}>
-          🏫 {showCunySchools ? 'Hide' : 'Browse'} CUNY Schools ({CUNY_SCHOOLS.length}) <span>{showCunySchools ? '▲' : '▼'}</span>
-        </button>
-        {showCunySchools && (
-          <div className="cuny-schools-grid">
-            {CUNY_SCHOOLS.map((school) => (
-              <a key={school.name} href={school.url} target="_blank" rel="noreferrer" className="cuny-school-chip">
-                <span className="cuny-school-name">{school.name}</span><span className="cuny-school-borough">{school.borough}</span>
+      <div className="featured-strip" aria-label="Featured deals and opportunities — updated daily">
+        <span className="featured-strip__label">⚡ Today's picks</span>
+        <div className="featured-strip__viewport" onMouseMove={handleStripMove} onMouseLeave={handleStripLeave}>
+          <div className="featured-strip__fade featured-strip__fade--left" aria-hidden="true" />
+          <div className="featured-strip__fade featured-strip__fade--right" aria-hidden="true" />
+          <div className="featured-strip__scroll" ref={scrollRef}>
+            {filteredDeals.map((deal) => (
+              <a key={deal.label} href={deal.url} target="_blank" rel="noreferrer" className={`featured-chip${deal.tag === 'CUNY' ? ' featured-chip--cuny' : ''}`} title={deal.desc}>
+                {deal.label}<span className="featured-chip__tag">{deal.tag}</span>
               </a>
             ))}
           </div>
-        )}
+        </div>
+      </div>
+
+      <div className="csi-links" aria-label="CSI quick links">
+        <span className="csi-links__label">🐬 CSI Quick Links</span>
+        <div className="csi-links__grid">
+          {CSI_QUICK_LINKS.map((l) => (
+            <a key={l.label} href={l.url} target="_blank" rel="noreferrer" className="csi-link-chip">
+              <span aria-hidden="true">{l.icon}</span>{l.label}
+            </a>
+          ))}
+        </div>
       </div>
 
       <div className="tool-grid">
@@ -88,6 +135,13 @@ export default function ToolSelector({ onSelect, onCheckup }) {
             <span className="tool-card__cta">Chat now →</span>
           </button>
         ))}
+        <button type="button" className="tool-card" style={{'--card-accent': '#365a9b', '--card-glow': 'rgba(54,90,155,0.10)', '--delay': '0.32s'}} onClick={onContacts}>
+          <span className="tool-card__badge">Help</span>
+          <span className="tool-card__icon">📇</span>
+          <h2 className="tool-card__label">Help &amp; Contacts</h2>
+          <p className="tool-card__desc">Real CSI office emails, phones &amp; locations — financial aid, FAFSA school code, registrar, counseling &amp; more</p>
+          <span className="tool-card__cta">Open directory →</span>
+        </button>
       </div>
     </div>
   )
