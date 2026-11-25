@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { profileSummary } from '../checkup/profile.js'
+import { getDemoResponse } from '../demo/demoResponder.js'
 
 const WELCOME = {
   resources: "Hey, I'm Sprindl! I help students find benefits, financial aid, food assistance, health coverage, and more. What's going on?",
@@ -25,6 +26,8 @@ export function useChat(mode = 'resources', welcomeText = null) {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(null)
   const historyRef = useRef([])
+  // Demo mode kicks in when VITE_DEMO_MODE=true or the AI backend is unreachable
+  const demoRef = useRef(import.meta.env.VITE_DEMO_MODE === 'true')
 
   useEffect(() => {
     historyRef.current = []
@@ -39,6 +42,20 @@ export function useChat(mode = 'resources', welcomeText = null) {
     setMessages((prev) => [...prev, { id: nextId(), role: 'user', content: trimmed }])
     historyRef.current = [...historyRef.current, { role: 'user', content: trimmed }]
     setIsLoading(true)
+
+    const answerWithDemo = async () => {
+      demoRef.current = true
+      await new Promise((r) => setTimeout(r, 500))
+      const data = getDemoResponse(trimmed, mode)
+      historyRef.current = [...historyRef.current, { role: 'assistant', content: data.reply }]
+      setMessages((prev) => [...prev, { id: nextId(), role: 'assistant', content: data.reply, ...data, demo: true }])
+    }
+
+    if (demoRef.current) {
+      try { await answerWithDemo() } finally { setIsLoading(false) }
+      return
+    }
+
     try {
       const res = await fetch('/api/chat', {
         method: 'POST',
@@ -47,9 +64,16 @@ export function useChat(mode = 'resources', welcomeText = null) {
       })
       const contentType = res.headers.get('content-type')
       if (!contentType || !contentType.includes('application/json')) {
-        throw new Error('The chat service is not available. This demo requires a backend server.')
+        // No backend (e.g. GitHub Pages): fall back to demo mode
+        await answerWithDemo()
+        return
       }
       const data = await res.json()
+      if (res.status >= 500) {
+        // Backend is up but the AI call failed (missing/invalid API key, etc.)
+        await answerWithDemo()
+        return
+      }
       if (!res.ok) throw new Error(data?.error || 'Something went wrong.')
       historyRef.current = [...historyRef.current, { role: 'assistant', content: data.reply }]
       setMessages((prev) => [...prev, {
@@ -58,6 +82,11 @@ export function useChat(mode = 'resources', welcomeText = null) {
         programs: data.programs || [], followUp: data.followUp || null,
       }])
     } catch (err) {
+      if (err instanceof TypeError) {
+        // Network failure reaching /api/chat: fall back to demo mode
+        await answerWithDemo()
+        return
+      }
       // Roll back the failed user turn so a retry doesn't send it twice
       historyRef.current = historyRef.current.slice(0, -1)
       setError(err.message || 'Something went wrong. Please try again.')
